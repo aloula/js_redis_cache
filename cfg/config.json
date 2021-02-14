@@ -1,0 +1,7 @@
+{
+  "redisServer": "localhost",
+  "redisServerPort": "6379",
+  "cacheExpireTimeSec": "120",
+  "frontServerPort": "8080",
+  "backServerPort": "3000"  
+}
