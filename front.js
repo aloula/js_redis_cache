@@ -14,12 +14,13 @@ const config = require('./get_config')
 const configValues = config.getConfig([])
 const redisServer = configValues[0]
 const redisServerPort = configValues[1]
-const cacheExpireTimeSec = configValues[2]
-const frontServerPort = configValues[3]
-const backServerPort = configValues[4]
+const cacheEnabled = configValues[2]
+const cacheExpireTimeSec = configValues[3]
+const frontServerPort = configValues[4]
+const backServerPort = configValues[5]
 
 console.log("Using the following configuration from: 'cfg/config.json'")
-console.log("Redis Server:", redisServer, "| Port:", redisServerPort, "| Cache Expire Time(s):", cacheExpireTimeSec)
+console.log("Redis Server:", redisServer, "| Port:", redisServerPort, "| Enabled: ", cacheEnabled, "| Cache Expire Time(s):", cacheExpireTimeSec)
 console.log("Front Server Port:", frontServerPort)
 console.log("Back Server Port:", backServerPort)
 
@@ -57,11 +58,7 @@ const getResultFromCache = (number, res) => {
 	let CacheTime = Date.now()
 	client.get(number, (error, result) => {
 		if (result) {
-			console.log(
-				'Cache request took',
-				Date.now() - CacheTime,
-				'ms'
-			)
+			//console.log('Cache request took', Date.now() - CacheTime, 'ms')
 			// redirect to display the result & source
 			res.redirect('/done?result=' + result + '&from=cache')
 		} else {
@@ -77,7 +74,7 @@ const getResultFromAPI = (number, res) => {
 			number: number
 		})
 		.then(response => {
-			console.log('API Request took', Date.now() - ApiTime, 'ms')
+			// console.log('API Request took', Date.now() - ApiTime, 'ms')
 			let result = response.data.result
 			// when receiving the result from API, original number from the user input and the result will be stored in the CACHE
 			client.set(number, result)
@@ -93,15 +90,20 @@ const getResultFromAPI = (number, res) => {
 app.post('/', (req, res) => {
 	let number = req.body.number
 	// if the original number and the result are already stored, result will be true
-	client.exists(number, (error, result) => {
-		if (result) {
-			getResultFromCache(number, res)
-			// else we will make a request to the API
-		} else {
-			getResultFromAPI(number, res)
+	if (cacheEnabled === true) {
+		client.exists(number, (error, result) => {
+			if (result) {
+				getResultFromCache(number, res)
+				// else we will make a request to the API
+			} else {
+				getResultFromAPI(number, res)
+			}
+		})
+		} else { 
+			getResultFromAPI (number, res)
 		}
 	})
-})
+
 
 // the final page template, to which our functions redirect to
 app.get('/done', (req, res) => {

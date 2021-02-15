@@ -8,10 +8,11 @@ module.exports = {
     let config = JSON.parse(rawdata);
     let redisServer = (config.redisServer); 
     let redisServerPort = (config.redisServerPort);
+    let cacheEnabled = (config.cacheEnabled);
     let cacheExpireTimeSec = (config.cacheExpireTimeSec);
     let frontServerPort = (config.frontServerPort);
     let backServerPort = (config.backServerPort);
-    return [redisServer, redisServerPort, cacheExpireTimeSec, frontServerPort, backServerPort];
+    return [redisServer, redisServerPort, cacheEnabled, cacheExpireTimeSec, frontServerPort, backServerPort];
   }
 }
 
