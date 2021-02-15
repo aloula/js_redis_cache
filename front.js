@@ -23,14 +23,13 @@ console.log("Redis Server:", redisServer, "| Port:", redisServerPort, "| Cache E
 console.log("Front Server Port:", frontServerPort)
 console.log("Back Server Port:", backServerPort)
 
-
 const client = redis.createClient('redis://' + redisServer + ':' + redisServerPort)
 const backServer = ('http://localhost:' + backServerPort + '/')
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// our client-site, with the form to submit a number to the server
+// client-site with the form to submit a number to the server
 app.get('/', (req, res) => {
 	res.send(`
    <html lang="en">
@@ -61,7 +60,7 @@ const getResultFromCache = (number, res) => {
 			console.log(
 				'Cache request took',
 				Date.now() - CacheTime,
-				'Milliseconds'
+				'ms'
 			)
 			// redirect to display the result & source
 			res.redirect('/done?result=' + result + '&from=cache')
@@ -78,7 +77,7 @@ const getResultFromAPI = (number, res) => {
 			number: number
 		})
 		.then(response => {
-			console.log('API Request took', Date.now() - ApiTime, 'Milliseconds')
+			console.log('API Request took', Date.now() - ApiTime, 'ms')
 			let result = response.data.result
 			// when receiving the result from API, original number from the user input and the result will be stored in the CACHE
 			client.set(number, result)
