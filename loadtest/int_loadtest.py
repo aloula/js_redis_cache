@@ -1,10 +1,9 @@
 # Locust load test
 
-from locust import HttpUser, task, between
+from locust import HttpUser, task
 
 
 class LoadTest(HttpUser):
-    wait_time = between(1, 2.5)
     @task
     def send_form(self):
       headers = {

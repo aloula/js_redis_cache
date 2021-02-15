@@ -1,4 +1,4 @@
-### JavaScript API with Redis cache
+## JavaScript API with Redis cache
 
 Basic JavaScript example for caching HTTP responses using Redis.
 
@@ -8,7 +8,7 @@ Basic JavaScript example for caching HTTP responses using Redis.
 - Docker: <https://www.docker.com/products/docker-desktop>
 - Redis: <https://redis.io/download>
 
-#### Instructions:
+### Common instructions:
 1 - Install Redis docker image:
 ``` 
 $ docker pull redis
@@ -24,26 +24,54 @@ $ ./run_container.sh
 $ npm install --save node-fetch express redis
 ```
 
-4 - Run the API Back:
+### Instructions for the External API:
+
+1 - Run the External API:
 ```
-$ node back.js
+$ node ext_api.js
+Using the following configuration from: 'cfg/config.json'
+Redis Server: localhost | Port: 6379 | Enabled:  true | Cache Expire Time(s): 600
+Back Server Port: 8080
+Console Output: false
+Server listening on 8080 port...
+```
+
+2 - Compare the response time by hiting the API (when the request is answered by the cache the response is faster). Postman is welcome here as well:
+```
+$ ./ext_api_test.sh
+*   Trying 127.0.0.1:8080...
+* Connected to localhost (127.0.0.1) port 8080 (#0)
+> GET /book?isbn=8535914846 HTTP/1.1
+...
+
+"time_total": 0.006350,
+...
+```
+
+### Instructions for the Internal API:
+
+1 - Execute the Internal API Back:
+```
+$ node int_back.js
 Using the following configuration from: 'cfg/config.json'
 Back Server Port: 3000
+Console Output: false
 Waiting connections from API front...
 ```
 
-5 - Open other terminal and run the API Front:
+2 - Open other terminal and run the Internal API Front:
 ```
-$ node front.js
+$ node int_front.js
 Using the following configuration from: 'cfg/config.json'
-Redis Server: localhost | Port: 6379 | Cache Expire Time(s): 120
+Redis Server: localhost | Port: 6379 | Enabled:  true | Cache Expire Time(s): 600
 Front Server Port: 8080
 Back Server Port: 3000
+Console Output: false
 ```
 
-6 - Open your browser and point to: <http://localhost:8080>
+3 - Open your browser and point to: <http://localhost:8080>
 
-7 - Type any number and press 'Submit'. If you repeat the number within the cache expire time, it will use the Redis and the response time will be way faster.
+4 - Type any number and press 'Submit'. If you repeat the number within the cache expire time, it will use the Redis and the response time will be way faster.
 ```
 API Request took 75 ms
 API Request took 11 ms
@@ -51,30 +79,42 @@ Cache request took 3 ms
 Cache request took 3 ms
 ```
 
-#### Load testing:
+### Load testing:
 1 - Install the Locust: <https://locust.io/>
 
 2 - Install the Taurus for BlazeMeter integration: <https://gettaurus.org/>
 
-3 - Jump in <loadtest> folder and edit the <loadtest.yml> file according to your needs
+3 - Jump in **loadtest** folder and edit the `yml` files according to your needs
 
 4 - Execute the test:
 ```
-$ bzt loadtest.yml -report
+$ bzt <xxx.yml> -report
 ```
 
 5 - A nice report will be generated at BlazeMeter
 
-#### Results:
-
-- Simulating **100 users** with cache enabled:
-
-![](./loadtest/reports/cache_enabled.png)
+### External API Results:
 
 - Simulating **100 users** with cache disabled:
 
-![](./loadtest/reports/cache_disabled.png)
+![](./loadtest/reports/external_api_cache_disabled.png)
 
-- **Cache Enabled:**  Avg Resp Time: 18 ms | 90% Resp Time: 28 ms
+- Simulating **100 users** with cache enabled:
 
-- **Cache Disabled:** Avg Resp Time: 23 ms | 90% Resp Time: 38 ms
+![](./loadtest/reports/external_api_cache_enabled.png)
+
+### Internal API Results:
+
+- Simulating **100 users** with cache disabled:
+
+![](./loadtest/reports/internal_api_cache_disabled.png)
+
+- Simulating **100 users** with cache enabled:
+
+![](./loadtest/reports/internal_api_cache_enabled.png)
+
+### Comparison:
+
+![](./loadtest/reports/compare_table.png)
+
+

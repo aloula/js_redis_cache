@@ -8,7 +8,7 @@ execution:
 scenarios:
   loadtest:
     default-address: http://localhost:8080
-    script: locustfile.py
+    script: int_loadtest.py
 
 modules:
  console:
