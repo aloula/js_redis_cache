@@ -1,8 +1,8 @@
 {
   "redisServer": "localhost",
   "redisServerPort": "6379",
-  "cacheEnabled": false,
-  "cacheExpireTimeSec": "120",
+  "cacheEnabled": true,
+  "cacheExpireTimeSec": "600",
   "frontServerPort": "8080",
   "backServerPort": "3000",
   "consoleOutput": false  

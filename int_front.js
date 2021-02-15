@@ -1,4 +1,4 @@
-// front.js
+// int_front.js
 // ========
 
 // import modules
