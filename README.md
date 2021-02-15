@@ -43,7 +43,7 @@ Back Server Port: 3000
 
 6 - Open your browser and point to: <http://localhost:8080>
 
-7 - Type any number and press 'Submit'. If you repeat the same numer within the cache expire time, it will use the Redis and the response time will be way faster.
+7 - Type any number and press 'Submit'. If you repeat the number within the cache expire time, it will use the Redis and the response time will be way faster.
 ```
 API Request took 75 ms
 API Request took 11 ms
