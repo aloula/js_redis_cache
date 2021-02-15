@@ -12,7 +12,8 @@ module.exports = {
     let cacheExpireTimeSec = (config.cacheExpireTimeSec);
     let frontServerPort = (config.frontServerPort);
     let backServerPort = (config.backServerPort);
-    return [redisServer, redisServerPort, cacheEnabled, cacheExpireTimeSec, frontServerPort, backServerPort];
+    let consoleOutput = (config.consoleOutput);
+    return [redisServer, redisServerPort, cacheEnabled, cacheExpireTimeSec, frontServerPort, backServerPort, consoleOutput];
   }
 }
 

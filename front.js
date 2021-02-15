@@ -18,11 +18,13 @@ const cacheEnabled = configValues[2]
 const cacheExpireTimeSec = configValues[3]
 const frontServerPort = configValues[4]
 const backServerPort = configValues[5]
+const consoleOutput = configValues[6]
 
 console.log("Using the following configuration from: 'cfg/config.json'")
 console.log("Redis Server:", redisServer, "| Port:", redisServerPort, "| Enabled: ", cacheEnabled, "| Cache Expire Time(s):", cacheExpireTimeSec)
 console.log("Front Server Port:", frontServerPort)
 console.log("Back Server Port:", backServerPort)
+console.log("Console Output:", consoleOutput)
 
 const client = redis.createClient('redis://' + redisServer + ':' + redisServerPort)
 const backServer = ('http://localhost:' + backServerPort + '/')
@@ -58,7 +60,9 @@ const getResultFromCache = (number, res) => {
 	let CacheTime = Date.now()
 	client.get(number, (error, result) => {
 		if (result) {
-			//console.log('Cache request took', Date.now() - CacheTime, 'ms')
+			if (consoleOutput === true) {
+				console.log('Cache request took', Date.now() - CacheTime, 'ms')
+			}
 			// redirect to display the result & source
 			res.redirect('/done?result=' + result + '&from=cache')
 		} else {
@@ -74,7 +78,9 @@ const getResultFromAPI = (number, res) => {
 			number: number
 		})
 		.then(response => {
-			// console.log('API Request took', Date.now() - ApiTime, 'ms')
+			if (consoleOutput === true) {
+				console.log('API Request took', Date.now() - ApiTime, 'ms')
+			}
 			let result = response.data.result
 			// when receiving the result from API, original number from the user input and the result will be stored in the CACHE
 			client.set(number, result)

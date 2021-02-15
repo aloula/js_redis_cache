@@ -1,6 +1,6 @@
 execution:
 - executor: locust
-  concurrency: 1000
+  concurrency: 100
   ramp-up: 30s
   hold-for: 1m
   scenario: loadtest
