@@ -39,7 +39,7 @@ Console Output: false
 Server listening on 8080 port...
 ```
 
-2 - Compare the response time by hiting the API (when the request is answered by the cache the response is faster). Postman is welcome here as well:
+2 - Open other terminal and compare the response time by hiting the API (when the request is answered by the cache the response is faster). Postman is welcome here as well:
 ```
 $ ./ext_api_test.sh
 *   Trying 127.0.0.1:8080...
