@@ -117,4 +117,8 @@ $ bzt <xxx.yml> -report
 
 ### Comparison:
 
+![](./loadtest/reports/external_api_graph.png)
+
 ![](./loadtest/reports/compare_table.png)
+
+
