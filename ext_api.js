@@ -26,32 +26,36 @@ console.log("Redis Server:", redisServer, "| Port:", redisServerPort, "| Enabled
 console.log("Back Server Port:", frontServerPort)
 console.log("Console Output:", consoleOutput)
  
+
+// cep is like the zipcode for Brazil
 const getBook = (req, res) => {
-  let isbn = req.query.isbn;
-  let url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`;
+  let cep = req.query.cep;
+  let url = ('https://viacep.com.br/ws/' + cep + '/json/');
+  // console.log(url);
   return axios.get(url)
     .then(response => {
-      let book = response.data.items;
+      let location = response.data;
+      // console.log(location);
       if (consoleOutput === true){
-        console.log(JSON.stringify(book));
+        console.log(JSON.stringify(location));
       }
-      // If 'cacheEnabled = true' in config we define an isbn key for our cache
+      // If 'cacheEnabled = true' in config we define a cep key for our cache
       if (cacheEnabled === true){
-        client.set(isbn, JSON.stringify(book))
+        client.set(cep, JSON.stringify(location))
 			  // The cache entry will be deleted after the 'cacheExpireTimeSec' automatically
-			  client.expire(isbn, cacheExpireTimeSec)
+			  client.expire(cep, cacheExpireTimeSec)
       }
-      res.send(book);
+      res.send(location);
     })
     .catch(err => {
-      res.send('Book not found !!!');
+      res.send('CEP not found !!!');
     });
 };
  
 const getCache = (req, res) => {
-  let isbn = req.query.isbn;
+  let cep = req.query.cep;
   //It verifies if we have cached it previously
-  client.get(isbn, (err, result) => {
+  client.get(cep, (err, result) => {
     if (result) {
       res.send(result);
     } else {
@@ -60,7 +64,7 @@ const getCache = (req, res) => {
   });
 }
  
-app.get('/book', getCache);
+app.get('/location', getCache);
  
 app.listen(frontServerPort, function() {
   console.log('Server listening on', frontServerPort, "port...")
