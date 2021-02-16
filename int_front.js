@@ -1,7 +1,7 @@
 // int_front.js
-// ========
+// ============
 
-// import modules
+// dependencies
 const express = require('express')
 const app = express()
 const redis = require('redis')
@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const axios = require('axios')
 
-// get configuration values from
+// get configuration values from 'cfg/config.json'
 const config = require('./get_config')
 const configValues = config.getConfig([])
 const redisServer = configValues[0]
@@ -29,6 +29,7 @@ console.log("Console Output:", consoleOutput)
 const client = redis.createClient('redis://' + redisServer + ':' + redisServerPort)
 const backServer = ('http://localhost:' + backServerPort + '/')
 
+// program starts here
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -45,7 +46,7 @@ app.get('/', (req, res) => {
       <body>
          Type a number (the result will be multiplied by 2):
          <form action="/" method="post">
-				 		<br>
+			</br>
             <input type="number" name="number" placeholder="a number" />
             <input type="submit" />
          </form>

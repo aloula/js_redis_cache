@@ -1,17 +1,15 @@
 // ext_api.js
-// ===============
+// ===========
 
 'use strict';
 
 // dependencies 
 const express = require('express');
-//const responseTime = require('response-time')
 const axios = require('axios');
 const redis = require('redis');
 const client = redis.createClient();
  
 var app = express();
-//app.use(responseTime());
 
 // get configuration values from
 const config = require('./get_config')

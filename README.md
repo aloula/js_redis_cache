@@ -1,6 +1,9 @@
 ## JavaScript API with Redis cache
 
-Basic JavaScript example for caching HTTP responses using Redis.
+Basic JavaScript examples for caching HTTP responses using Redis.
+
+![](./img/js_api_cache_redis.png)
+
 
 ### Requirements:
 
@@ -43,7 +46,6 @@ $ ./ext_api_test.sh
 * Connected to localhost (127.0.0.1) port 8080 (#0)
 > GET /book?isbn=8535914846 HTTP/1.1
 ...
-
 "time_total": 0.006350,
 ...
 ```
@@ -116,5 +118,3 @@ $ bzt <xxx.yml> -report
 ### Comparison:
 
 ![](./loadtest/reports/compare_table.png)
-
-
