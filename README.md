@@ -24,7 +24,7 @@ $ docker run -d -p 6379:6379 -v data:/data --name redis redis
 
 3 - Instale os módulos Javascript:
 ``` 
-$ npm install --save node-fetch express redis
+$ npm install
 ```
 
 4 - As configurações podem ser encontradas no arquivo 'config.json'
@@ -77,7 +77,7 @@ Console Output: false
 
 3 - Abra o browser em <http://localhost:8080>
 
-4 - Digite um número e pressine 'Enviar'. Se repetir o mesmo número dentro do tempo de expiração do cache a resposta será dada pelo Redis mais rapidamente. Observe os tempos no console:
+4 - Digite um número para cálculo da função Fatorial pressione 'Enviar'. Se repetir o mesmo número dentro do tempo de expiração do cache a resposta será dada pelo Redis mais rapidamente. Observe os tempos no console:
 ```
 Resultado da API: 13 ms
 Resultado da API: 3 ms
@@ -88,14 +88,13 @@ Resultado com cache: 0 ms
 ### Teste de Desempenho:
 1 - Instale o Locust: <https://locust.io/>
 
-3 - Vá para a pasta **loadtest** e edite os scripts caso necessário
+2 - Vá para a pasta **loadtest** e edite os scripts caso necessário
 
-4 - Execute o teste:
+3 - Execute o teste:
 ```
-$ bzt <xxx.yml> -report
+$ locust -f loadtest/<script.py> 
 ```
 
-5 - A nice report will be generated at BlazeMeter
 
 ### External API Results:
 

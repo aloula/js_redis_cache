@@ -21,6 +21,16 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+// factorial function
+function factorial(n) {
+	if (n == 1) {
+		   return 1;
+	 }
+	 else {
+		   return n*factorial(n-1)
+	 }
+}
+
 console.log("Waiting connections from API front...")
 app.post('/', (req, res) => {
 	if (consoleOutput === true) {
@@ -28,7 +38,7 @@ app.post('/', (req, res) => {
 	}
 
 	res.send({
-		result: req.body.number * 2
+		result: factorial(req.body.number)
 	})
 })
 

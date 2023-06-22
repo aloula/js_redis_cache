@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
          <title>Document</title>
       </head>
       <body>
-         Digite um número (o resultado será multiplicado por 2):
+         Digite um número para cálculo da função Fatorial:
          <form action="/" method="post">
 			</br>
             <input type="número" name="number" placeholder="um número" />
@@ -85,7 +85,7 @@ const getResultFromAPI = (number, res) => {
 			let result = response.data.result
 			// when receiving the result from API, original number from the user input and the result will be stored in the CACHE
 			client.set(number, result)
-			// the cache entry will be deleted after 60 sec, automatically
+			// the cache entry will be deleted after the 'cacheExpireTimeSec' automatically
 			client.expire(number, cacheExpireTimeSec)
 			res.redirect('/done?result=' + result + '&from=API')
 		})
@@ -120,8 +120,6 @@ app.get('/done', (req, res) => {
       </head>
       <body>
       Resultado: ${req.query.result}
-      <br/>
-      Valor digitado: ${req.query.result / 2}
       <br/>
       Resultado proveniente de: ${req.query.from}
       </body>
