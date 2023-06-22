@@ -5,5 +5,5 @@
   "cacheExpireTimeSec": "600",
   "frontServerPort": "8080",
   "backServerPort": "3000",
-  "consoleOutput": false  
+  "consoleOutput": true  
 }
