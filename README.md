@@ -1,35 +1,37 @@
-## JavaScript API with Redis cache
+## API Cache com NodeJS e Redis
 
-Basic JavaScript examples for caching HTTP responses using Redis.
+Scripts Javascript para cache de requisições HTTP com Redis.
 
 ![](./img/js_api_cache_redis.png)
 
 
-### Requirements:
+### Requisitos:
 
 - NodeJS: <https://nodejs.org/en/download>
 - Docker: <https://www.docker.com/products/docker-desktop>
 - Redis: <https://redis.io/download>
 
-### Common instructions:
-1 - Install Redis docker image:
+### Instruções gerais:
+1 - Instale a imagem Docker do Redis:
 ``` 
 $ docker pull redis
 ``` 
 
-2 - Run Redis container:
+2 - Rode o container Redis:
 ```
-$ ./run_container.sh
+$ docker run -d -p 6379:6379 -v data:/data --name redis redis
 ```
 
-3 - Install the modules:
+3 - Instale os módulos Javascript:
 ``` 
 $ npm install --save node-fetch express redis
 ```
 
-### Instructions for the External API:
+4 - As configurações podem ser encontradas no arquivo 'config.json'
 
-1 - Run the External API:
+### Instruções para API Externa:
+
+1 - Rode a API externa:
 ```
 $ node ext_api.js
 Using the following configuration from: 'cfg/config.json'
@@ -39,20 +41,22 @@ Console Output: false
 Server listening on 8080 port...
 ```
 
-2 - Open other terminal and compare the response time by hiting the API (when the request is answered by the cache the response is faster). Postman is welcome here as well:
+2 - Abra outro terminal e verifique a tempo de resposta entre as requisições. A primeira deve ser maior e as subsequentes menores por conta do cache:
 ```
-$ ./ext_api_test.sh
+$ curl -v -w "@curl-format.txt" http://localhost:8080/location?cep=01310100
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
-> GET /book?isbn=8535914846 HTTP/1.1
+> GET /location?cep=01310100 HTTP/1.1
 ...
-"time_total": 0.006350,
+{"cep":"01310-100","logradouro":"Avenida Paulista","complemento":"de 612 a 1510 - lado par","bairro":"Bela Vista","localidade":"São Paulo","uf":"SP","ibge":"3550308","gia":"1004","ddd":"11","siafi":"7107"}
+...
+"time_total": 0.002050,
 ...
 ```
 
-### Instructions for the Internal API:
+### Intruções para API Interna:
 
-1 - Execute the Internal API Back:
+1 - Execute a API Interna (back):
 ```
 $ node int_back.js
 Using the following configuration from: 'cfg/config.json'
@@ -61,7 +65,7 @@ Console Output: false
 Waiting connections from API front...
 ```
 
-2 - Open other terminal and run the Internal API Front:
+2 - Abra outro terminal e execute a API Interna (front):
 ```
 $ node int_front.js
 Using the following configuration from: 'cfg/config.json'
@@ -71,24 +75,22 @@ Back Server Port: 3000
 Console Output: false
 ```
 
-3 - Open your browser and point to: <http://localhost:8080>
+3 - Abra o browser em <http://localhost:8080>
 
-4 - Type any number and press 'Submit'. If you repeat the number within the cache expire time, it will use the Redis and the response time will be way faster.
+4 - Digite um número e pressine 'Enviar'. Se repetir o mesmo número dentro do tempo de expiração do cache a resposta será dada pelo Redis mais rapidamente. Observe os tempos no console:
 ```
-API Request took 75 ms
-API Request took 11 ms
-Cache request took 3 ms
-Cache request took 3 ms
+Resultado da API: 13 ms
+Resultado da API: 3 ms
+Resultado com cache: 1 ms
+Resultado com cache: 0 ms
 ```
 
-### Load testing:
-1 - Install the Locust: <https://locust.io/>
+### Teste de Desempenho:
+1 - Instale o Locust: <https://locust.io/>
 
-2 - Install the Taurus for BlazeMeter integration: <https://gettaurus.org/>
+3 - Vá para a pasta **loadtest** e edite os scripts caso necessário
 
-3 - Jump in **loadtest** folder and edit the `yml` files according to your needs
-
-4 - Execute the test:
+4 - Execute o teste:
 ```
 $ bzt <xxx.yml> -report
 ```

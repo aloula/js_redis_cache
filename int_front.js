@@ -44,10 +44,10 @@ app.get('/', (req, res) => {
          <title>Document</title>
       </head>
       <body>
-         Type a number (the result will be multiplied by 2):
+         Digite um número (o resultado será multiplicado por 2):
          <form action="/" method="post">
 			</br>
-            <input type="number" name="number" placeholder="a number" />
+            <input type="número" name="number" placeholder="um número" />
             <input type="submit" />
          </form>
       </body>
@@ -62,7 +62,7 @@ const getResultFromCache = (number, res) => {
 	client.get(number, (error, result) => {
 		if (result) {
 			if (consoleOutput === true) {
-				console.log('Cache request took', Date.now() - CacheTime, 'ms')
+				console.log('Resultado com cache:', Date.now() - CacheTime, 'ms')
 			}
 			// redirect to display the result & source
 			res.redirect('/done?result=' + result + '&from=cache')
@@ -80,7 +80,7 @@ const getResultFromAPI = (number, res) => {
 		})
 		.then(response => {
 			if (consoleOutput === true) {
-				console.log('API Request took', Date.now() - ApiTime, 'ms')
+				console.log('Resultado da API:', Date.now() - ApiTime, 'ms')
 			}
 			let result = response.data.result
 			// when receiving the result from API, original number from the user input and the result will be stored in the CACHE
@@ -119,11 +119,11 @@ app.get('/done', (req, res) => {
       <head>
       </head>
       <body>
-      The Result is: ${req.query.result}
+      Resultado: ${req.query.result}
       <br/>
-      So the original value is ${req.query.result / 2}
+      Valor digitado: ${req.query.result / 2}
       <br/>
-      And comes from: ${req.query.from}
+      Resultado proveniente de: ${req.query.from}
       </body>
    </html>
    `)
