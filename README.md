@@ -93,7 +93,7 @@ Resultado com cache: 0 ms // número repetido
 ### Teste de Desempenho:
 1 - Instale o Locust: <https://locust.io/>
 
-2 - Vá para a pasta **loadtest** e edite os scripts caso necessário
+2 - Vá para a pasta **locust** e edite os scripts caso necessário
 
 3 - Execute o script:
 ```
