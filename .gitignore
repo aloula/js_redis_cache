@@ -2,3 +2,5 @@ node_modules/
 __pycache__
 202*
 .venv
+.DS_Store
+

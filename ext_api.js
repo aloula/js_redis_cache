@@ -27,44 +27,45 @@ console.log("Back Server Port:", frontServerPort)
 console.log("Console Output:", consoleOutput)
  
 
-// cep is like the zipcode for Brazil
-const getBook = (req, res) => {
-  let cep = req.query.cep;
-  let url = ('https://viacep.com.br/ws/' + cep + '/json/');
-  // console.log(url);
+// get genre based on name
+const getGenre = (req, res) => {
+  let name = req.query.name;
+  //console.log(name)
+  let url = ('https://api.genderize.io/?name=' + name);
+  //console.log(url);
   return axios.get(url)
     .then(response => {
-      let location = response.data;
-      // console.log(location);
+      let genre = response.data;
+      //console.log(genre);
       if (consoleOutput === true){
-        console.log(JSON.stringify(location));
+        console.log(JSON.stringify(genre));
       }
       // If 'cacheEnabled = true' in config we define a cep key for our cache
       if (cacheEnabled === true){
-        client.set(cep, JSON.stringify(location))
+        client.set(name, JSON.stringify(genre))
 			  // The cache entry will be deleted after the 'cacheExpireTimeSec' automatically
-			  client.expire(cep, cacheExpireTimeSec)
+			  client.expire(name, cacheExpireTimeSec)
       }
-      res.send(location);
+      res.send(genre);
     })
     .catch(err => {
-      res.send('CEP not found !!!');
+      res.send('Genre not found !!!');
     });
 };
  
 const getCache = (req, res) => {
-  let cep = req.query.cep;
+  let name = req.query.name;
   //It verifies if we have cached it previously
-  client.get(cep, (err, result) => {
+  client.get(name, (err, result) => {
     if (result) {
       res.send(result);
     } else {
-      getBook(req, res);
+      getGenre(req, res);
     }
   });
 }
  
-app.get('/location', getCache);
+app.get('/', getCache);
  
 app.listen(frontServerPort, function() {
   console.log('Server listening on', frontServerPort, "port...")

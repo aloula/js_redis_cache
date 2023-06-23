@@ -1,18 +1,17 @@
 # Locust load test
 
-from locust import FastHttpUser, task
+from locust import HttpUser, task
 from random import choice
 
-zip_code_list = ["01310100", "03174000", "03640020", "03819170", "01310010", "02040070", "04650185", "04651075", "04843475", "04843475"]
+name_list = ["alex", "adriana", "maria", "caio", "julia", "antonio", "roger", "david", "janes", "taylor"]
 
-
-class LoadTest(FastHttpUser):
+class LoadTest(HttpUser):
     @task
-    def get_fixed_zip_code(self):
+    def get_genre(self):
       headers = {}
       payload = {}
-      query = "/location?cep=" + choice(zip_code_list)
-      with self.client.get(query, headers=headers, data=payload, name="cep", catch_response=True) as response:
+      query = "/?name=" + choice(name_list)
+      with self.client.get(query , headers=headers, data=payload, name="genre", catch_response=True) as response:
         if response.status_code == 200:
           response.success()
       
