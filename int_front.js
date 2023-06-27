@@ -74,8 +74,7 @@ const getResultFromCache = (number, res) => {
 
 const getResultFromAPI = (number, res) => {
 	let ApiTime = Date.now()
-	axios
-		.post(backServer, {
+	axios.post(backServer, {
 			number: number
 		})
 		.then(response => {

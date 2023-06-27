@@ -40,7 +40,7 @@ const getGenre = (req, res) => {
       if (consoleOutput === true){
         console.log(JSON.stringify(genre));
       }
-      // If 'cacheEnabled = true' in config we define a cep key for our cache
+      // If 'cacheEnabled = true' in config we define a 'name' key for our cache
       if (cacheEnabled === true){
         client.set(name, JSON.stringify(genre))
 			  // The cache entry will be deleted after the 'cacheExpireTimeSec' automatically
