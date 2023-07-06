@@ -45,8 +45,8 @@ app.get('/', (req, res) => {
    			</div>
    			<div class="input-container ic2">
      			<input name="expiration_time" class="input" type="number" placeholder=" " />
-     		<div class="cut cut-short"></div>
-     			<label for="Tempo de Expiração (sec)" class="placeholder"></>
+     		<div class="cut"></div>
+     			<label for="Tempo de Expiração (sec.)" class="placeholder">Tempo de Expiração (sec.)</label>
    			</div>
    				<button type="text" class="submit">Inicia Serviço</button>
     		</div>
