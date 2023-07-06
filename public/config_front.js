@@ -34,20 +34,35 @@ app.get('/', (req, res) => {
 			<div class="title">Serviço de Cache HTTP</div>
 			<div class="subtitle">Configure o serviço</div>
 			<div class="input-container ic1">
+     			<input name="cache_port" class="input" type="text" placeholder=" " />
+     		<div class="cut"></div>
+     			<label for="cache_port" class="placeholder">Porta do Cache</label>
+   			</div>
+			<div class="input-container ic2">
      			<input name="redis_host" class="input" type="text" placeholder=" " />
      		<div class="cut"></div>
-     			<label for="Redis" class="placeholder">Host Redis</label>
+     			<label for="redis_host" class="placeholder">Host Redis</label>
    			</div>
    			<div class="input-container ic2">
-     			<input name="redis_port" class="input" type="number" placeholder=" " />
+     			<input name="redis_port" class="input" type="text" placeholder=" " />
      		<div class="cut"></div>
-     			<label for="Porta" class="placeholder">Porta</label>
+     			<label for="redis_port" class="placeholder">Porta do Redis</label>
    			</div>
    			<div class="input-container ic2">
      			<input name="expiration_time" class="input" type="number" placeholder=" " />
      		<div class="cut"></div>
-     			<label for="Tempo de Expiração (sec.)" class="placeholder">Tempo de Expiração (sec.)</label>
+     			<label for="expiration_time" class="placeholder">Tempo de Expiração (sec.)</label>
    			</div>
+			<div class="input-container ic2">
+			   <input name="cache_enabled" class="input" type="radio" placeholder=" " />
+		   	 <div class="cut"></div>
+			   <label for="cache_enabled" class="placeholder">Cache Habilitado</label>
+			 </div>
+			<div class="input-container ic2">
+			   <input name="console_output" class="input" type="radio" placeholder=" " />
+		   	<div class="cut"></div>
+			   <label for="console_output" class="placeholder">Log no Console</label>
+			 </div>
    				<button type="text" class="submit">Inicia Serviço</button>
     		</div>
 		</form>

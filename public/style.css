@@ -34,17 +34,17 @@ body {
   }
   
   .input-container {
-    height: 50px;
+    height: 40px;
     position: relative;
     width: 100%;
   }
   
   .ic1 {
-    margin-top: 40px;
+    margin-top: 30px;
   }
   
   .ic2 {
-    margin-top: 30px;
+    margin-top: 20px;
   }
   
   .input {
@@ -53,27 +53,40 @@ body {
     border: 0;
     box-sizing: border-box;
     color: #eee;
-    font-size: 18px;
+    font-size: 16px;
     height: 100%;
     outline: 0;
-    padding: 4px 20px 0;
+    padding: 4px 18px 0;
     width: 100%;
   }
-  
+
+  .input[type=radio] {
+    background-color: #303245;
+    border-radius: 12px;
+    border: 0px;
+    box-sizing: border-box;
+    color: #eee;
+    font-size: 16px;
+    height: 2em;
+    outline: 0;
+    padding: 4px 18px 0;
+    width: 100%;
+  }
+
   .cut {
     background-color: #15172b;
-    border-radius: 10px;
-    height: 20px;
-    left: 20px;
+    border-radius: 8px;
+    height: 16px;
+    left: 16px;
     position: absolute;
-    top: -20px;
+    top: -16px;
     transform: translateY(0);
     transition: transform 200ms;
-    width: 76px;
+    width: 60px;
   }
   
   .cut-short {
-    width: 50px;
+    width: 30px;
   }
   
   .input:focus ~ .cut,
@@ -84,13 +97,13 @@ body {
   .placeholder {
     color: #65657b;
     font-family: sans-serif;
-    left: 20px;
-    line-height: 14px;
+    left: 16px;
+    line-height: 10px;
     pointer-events: none;
     position: absolute;
     transform-origin: 0 50%;
     transition: transform 200ms, color 200ms;
-    top: 20px;
+    top: 16px;
   }
   
   .input:focus ~ .placeholder,
@@ -113,9 +126,9 @@ body {
     box-sizing: border-box;
     color: #eee;
     cursor: pointer;
-    font-size: 18px;
-    height: 50px;
-    margin-top: 38px;
+    font-size: 16px;
+    height: 30px;
+    margin-top: 30px;
     // outline: 0;
     text-align: center;
     width: 100%;
