@@ -4,13 +4,14 @@
 // dependências
 const express = require('express')
 const app = express()
+const axios = require('axios');
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const saveConfig = require('save_config')
+const config = require('./save_config')
 
-// carrega config
-const configValues = config.getConfig('./cfg/interface.json')
-const frontServerPort = configValues[0]
+
+// variáveis
+const frontServerPort = 8080
 
 // início
 app.use(cors())
@@ -33,17 +34,17 @@ app.get('/', (req, res) => {
 			<div class="title">Serviço de Cache HTTP</div>
 			<div class="subtitle">Configure o serviço</div>
 			<div class="input-container ic1">
-     			<input id="redis_host" class="input" type="text" placeholder=" " />
+     			<input name="redis_host" class="input" type="text" placeholder=" " />
      		<div class="cut"></div>
      			<label for="Redis" class="placeholder">Host Redis</label>
    			</div>
    			<div class="input-container ic2">
-     			<input id="redis_port" class="input" type="number" placeholder=" " />
+     			<input name="redis_port" class="input" type="number" placeholder=" " />
      		<div class="cut"></div>
      			<label for="Porta" class="placeholder">Porta</label>
    			</div>
    			<div class="input-container ic2">
-     			<input id="expiration_time" class="input" type="number" placeholder=" " />
+     			<input name="expiration_time" class="input" type="number" placeholder=" " />
      		<div class="cut cut-short"></div>
      			<label for="Tempo de Expiração (sec)" class="placeholder"></>
    			</div>
@@ -58,8 +59,12 @@ app.post('/', (req, res) => {
 	let redis_host = req.body.redis_host
 	let redis_port = req.body.redis_port
 	let expiration_time = req.body.expiration_time
-	saveConfig('./cfg/teste.json', redis_host, redis_port, expiration_time)
+	console.log(redis_host)
+	config.saveConfig('./cfg/teste.json', redis_host, redis_port, expiration_time)
 })
 
 
-app.listen(frontServerPort)
+app.listen(frontServerPort, function() {
+	console.log('Servidor de cache funcionando na porta', frontServerPort, "...")
+  });
+
