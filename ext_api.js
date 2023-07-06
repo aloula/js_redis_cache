@@ -12,18 +12,17 @@ const client = redis.createClient();
 var app = express();
 
 // get configuration values from
-const config = require('./get_config')
-const configValues = config.getConfig([])
-const redisServer = configValues[0]
-const redisServerPort = configValues[1]
-const cacheEnabled = configValues[2]
+const config = require('./public/get_config')
+const configValues = config.getConfig('./cfg/cache.json')
+const cacheServerPort = configValues[0]
+const redisServer = configValues[1]
+const redisServerPort = configValues[2]
 const cacheExpireTimeSec = configValues[3]
-const frontServerPort = configValues[4]
-const consoleOutput = configValues[6]
+const cacheEnabled = configValues[4]
+const consoleOutput = configValues[5]
 
-console.log("Using the following configuration from: 'cfg/config.json'")
+console.log("Cache Server Port:", cacheServerPort, "| Habilitado:", cacheEnabled)
 console.log("Redis Server:", redisServer, "| Port:", redisServerPort, "| Enabled: ", cacheEnabled, "| Cache Expire Time(s):", cacheExpireTimeSec)
-console.log("Back Server Port:", frontServerPort)
 console.log("Console Output:", consoleOutput)
  
 
@@ -67,6 +66,6 @@ const getCache = (req, res) => {
  
 app.get('/', getCache);
  
-app.listen(frontServerPort, function() {
-  console.log('Server listening on', frontServerPort, "port...")
+app.listen(cacheServerPort, function() {
+  console.log('Servidor de cache funcionando na porta', cacheServerPort, "...")
 });
