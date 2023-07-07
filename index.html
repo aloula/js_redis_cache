@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Serviço de Cache HTTP</title>
+</head>
+
+<body>
+    <form action="/" method="post">
+        <div class="form">
+            <div class="title">Serviço de Cache HTTP</div>
+            <div class="subtitle">Configure o serviço</div>
+            <div class="input-container ic1">
+                <input name="cache_port" class="input" type="text" placeholder=" " />
+                <div class="cut"></div>
+                <id="cache_port" class="placeholder">Porta do Cache</id>
+            </div>
+            <div class="input-container ic2">
+                <input name="redis_host" class="input" type="text" placeholder=" " />
+                <div class="cut"></div>
+                <id="redis_host" class="placeholder">Host Redis</id>
+            </div>
+            <div class="input-container ic2">
+                <input name="redis_port" class="input" type="text" placeholder=" " />
+                <div class="cut"></div>
+                <id="redis_port" class="placeholder">Porta do Redis</id>
+            </div>
+            <div class="input-container ic2">
+                <input name="expiration_time" class="input" type="text" placeholder=" " />
+                <div class="cut"></div>
+                <id="expiration_time" class="placeholder">Tempo de Expiração (sec.)</id>
+            </div>
+            <div>
+                <button id="btnStart" class="submit">Inicia Serviço</button>
+            </div>
+    </form>
+
+</html>

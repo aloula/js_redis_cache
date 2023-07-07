@@ -2,7 +2,7 @@
 // =============
 
 
-// função
+// módulo para salvar configuração do serviço em formato json
 module.exports = {
     
     saveConfig: function saveConfig (filename, redis_host, redis_port, expiration_time) {

@@ -1,6 +1,8 @@
 // get_config.js
 // =============
 
+
+// módulo para carregar configuração do serviço em formato json
 module.exports = {
 
   getConfig: function getConfig (filename) {
