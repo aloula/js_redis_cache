@@ -12,7 +12,7 @@ const client = redis.createClient();
 // variáveis
 var app = express();
 const configFile = './cfg/cacheApi.json'
-const cacheEnabled = true;
+const cacheEnabled = false;
 const consoleOutput = false;
 
 // função exportada

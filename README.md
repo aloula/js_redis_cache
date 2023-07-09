@@ -45,7 +45,7 @@ Server listening on 8080 port...
 
 2 - Abra outro terminal e verifique a tempo de resposta entre as requisições. A primeira deve ser maior e as subsequentes menores por conta do cache:
 ```
-$ curl -v -w "@curl-format.txt" "http://localhost:8080/?name=alex"
+$ curl -s -o /dev/null -w "@curl-format.txt" "http://localhost:8080/?pokemonName=blastoise"
 
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
