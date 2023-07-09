@@ -14,7 +14,7 @@ router.get('/start', (req, res, next) => {
 })
 
 router.post('/start', (req, res, next) => {
-    res.redirect('/stop')
+    res.redirect('/stop');
 })
 
 module.exports = router
