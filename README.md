@@ -97,7 +97,7 @@ Resultado com cache: 0 ms // número repetido
 
 3 - Execute o script:
 ```
-$ locust -f loadtest/<script.py> 
+$ locust -f perf_test.py 
 ```
 
 4 - Abra o browser em <http://localhost:8089> e execute o teste

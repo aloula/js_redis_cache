@@ -1,4 +1,4 @@
-// cache_api.js
+// cacheApi.js
 // ===========
 
 'use strict';
@@ -11,62 +11,62 @@ const client = redis.createClient();
 
 // variáveis
 var app = express();
+const configFile = './cfg/cacheApi.json'
 const cacheEnabled = true;
-const consoleOutput = true;
+const consoleOutput = false;
 
 // função exportada
 function startCache () {
     // carrega configuração
-    const config = require('./get_config')
-    const configValues = config.getConfig('./cfg/cache.json')
+    const config = require('./loadConfig');
+    const configValues = config.loadConfig(configFile)
     const cacheServerPort = configValues[0]
     const redisServer = configValues[1]
     const redisServerPort = configValues[2]
-    const cacheExpireTimeSec = configValues[3]
-    
-    // configura request
-    const getGenre = (req, res) => {
-      let name = req.query.name;
-      //console.log(name)
-      let url = ('https://api.genderize.io/?name=' + name);
-      //console.log(url);
+    const expirationTime = configValues[3]
+
+    // configura request para API pública Pokémon
+    const getPokemonData = (req, res) => {
+      let pokemonName = req.query.pokemonName;
+      let url = ('https://pokeapi.co/api/v2/pokemon/?pokemonName=' + pokemonName);
       return axios.get(url)
         .then(response => {
-          let genre = response.data;
-          //console.log(genre);
+          let pokemonData = response.data;
           if (consoleOutput === true){
-            console.log(JSON.stringify(genre));
+            console.log(JSON.stringify(pokemonData));
           }
           // usa o cache
           if (cacheEnabled === true){
-            client.set(name, JSON.stringify(genre))
+            client.set(pokemonName, JSON.stringify(pokemonData))
             // a entrada do cache será removida após o tempo de expiração do cache
-            client.expire(name, cacheExpireTimeSec)
+            client.expire(pokemonName, expirationTime)
           }
-          res.send(genre);
+          res.send(pokemonData);
         })
         .catch(err => {
-          res.send('Gênero não encontrado !!!');
+          res.send('Pokémon não encontrado !!!');
         });
     };
     
+  
     // captura resposta
     const getCache = (req, res) => {
-      let name = req.query.name;
+      let pokemonName = req.query.pokemonName;
       // verifica se o cache existe
-      client.get(name, (err, result) => {
+      client.get(pokemonName, (err, result) => {
         if (result) {
           res.send(result);
         } else {
-          getGenre(req, res);
+          getPokemonData(req, res);
         }
       });
     }
     
+    
     app.get('/', getCache);
     
     app.listen(cacheServerPort, function() {
-      let output = ("Serviço de Cache:", cacheServerPort, '\n', "Redis Host:", redisServer, "| Porta:", redisServerPort, "| Tempo de Expiração(s):", cacheExpireTimeSec)
+      let output = ("Serviço de Cache:", cacheServerPort, '\n', "Redis Host:", redisServer, "| Porta:", redisServerPort, "| Tempo de Expiração(s):", expirationTime)
       return(output)
     });
   }

@@ -1,10 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const path = require('path')
-const cache = require('../modules/cache_api')
+// start.js
+// =============
 
-// const stopService = require('./stop')
-// app.use(stopService);
+// dependências
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const cache = require('../modules/cacheApi');
 
 
 router.get('/start', (req, res, next) => {
