@@ -1,8 +1,14 @@
-## API Cache com NodeJS e Redis
+## Sistema de Cache HTTP com NodeJS e Redis
 
-Scripts Javascript para cache de requisições HTTP com Redis.
+Sistema de Cache HTTP com NodeJS para cache de requisições HTTP com cache em memória usando Redis.
 
 ![](./img/js_api_cache_redis.png)
+
+### Vídeos
+
+[Protótipo da Telas](https://youtu.be/NFFzPlI0Su0)
+
+[Demo](https://youtu.be/yhBSM_iEEUc)
 
 
 ### Requisitos:
