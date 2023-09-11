@@ -8,7 +8,7 @@ pokemon_name_list = ["Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Chariza
 
 class LoadTest(HttpUser):
     @task
-    def get_genre(self):
+    def get_pokemon(self):
       headers = {}
       payload = {}
       query = "/?pokemonName=" + choice(pokemon_name_list)
